@@ -5,5 +5,5 @@ import cn.appsys.pojo.AppCategory;
 
 public interface AppCategoryService {
 	
-	public List<AppCategory> getAppCategoryList()throws Exception;
+	public List<AppCategory> getAppCategoryList(Integer parentId)throws Exception;
 }

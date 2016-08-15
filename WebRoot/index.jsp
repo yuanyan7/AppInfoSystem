@@ -33,7 +33,6 @@
       <div>
       <button type="button" class="btn btn-link"><a href="dev/login">开发者平台 入口</a></button>
       </div>
-      
     </div>
   </body>
 </html>

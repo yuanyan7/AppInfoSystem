@@ -1,8 +1,6 @@
 package cn.appsys.controller.developer;
 
-import java.net.Inet4Address;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.DataDictionary;
@@ -24,8 +21,7 @@ import cn.appsys.tools.PageSupport;
 @Controller
 @RequestMapping(value="/dev/flatform")
 public class AppInfoController {
-private Logger logger = Logger.getLogger(AppInfoController.class);
-	
+	private Logger logger = Logger.getLogger(AppInfoController.class);
 	@Resource
 	private AppInfoService appInfoService;
 	@Resource 
@@ -124,8 +120,7 @@ private Logger logger = Logger.getLogger(AppInfoController.class);
 		model.addAttribute("statusList", statusList);
 		model.addAttribute("flatFormList", flatFormList);
 		model.addAttribute("categoryLevel1List", categoryLevel1List);
-		return "appinfolist";
-		
+		return "developer/appinfolist";
 	}
 	
 }

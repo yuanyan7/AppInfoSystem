@@ -1,8 +1,8 @@
+	</div>
+   </div>
+  </div>
  </div>
-            </div>
-          </div>
-        </div>
-        <!-- /page content -->
+ <!-- /page content -->
 <!-- footer content -->
 	<footer>
 	  <div class="pull-right">

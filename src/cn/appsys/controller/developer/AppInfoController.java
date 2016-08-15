@@ -15,6 +15,7 @@ import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.DataDictionary;
 import cn.appsys.pojo.DevUser;
+import cn.appsys.service.developer.AppCategoryService;
 import cn.appsys.service.developer.AppInfoService;
 import cn.appsys.service.developer.DataDictionaryService;
 import cn.appsys.tools.Constants;
@@ -114,12 +115,15 @@ private Logger logger = Logger.getLogger(AppInfoController.class);
 			appInfoList = appInfoService.getAppInfoList(querySoftwareName, queryStatus, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId, devId, currentPageNo, pageSize);
 			statusList = dataDictionaryService.getDataDictionaryList("APP_STATUS");
 			flatFormList = dataDictionaryService.getDataDictionaryList("APP_FLATFORM");
-			statusList = dataDictionaryService.getDataDictionaryList("APP_STATUS");
-			categoryLevel1List = categoryService
+			categoryLevel1List = appCategoryService.getAppCategoryListByParentId(null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addAttribute("appInfoList", appInfoList);
+		model.addAttribute("statusList", statusList);
+		model.addAttribute("flatFormList", flatFormList);
+		model.addAttribute("categoryLevel1List", categoryLevel1List);
 		return "appinfolist";
 		
 	}

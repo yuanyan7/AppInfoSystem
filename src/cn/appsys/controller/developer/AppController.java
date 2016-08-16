@@ -383,4 +383,10 @@ public class AppController {
 		model.addAttribute(appInfo);
 		return "developer/appinfomodify";
 	}
+	
+	@RequestMapping(value = "/upload")  
+	@ResponseBody
+    public Object upload(@RequestParam(value = "a_fileInputID", required = false) MultipartFile cardFile, 
+    		             @RequestParam(value = "a_fileInputBank", required = false) MultipartFile bankFile, 
+    					 HttpServletRequest request,HttpSession session) {  
 }

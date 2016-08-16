@@ -1,7 +1,6 @@
 package cn.appsys.controller.developer;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.jdbc.StringUtils;
 
@@ -384,10 +381,17 @@ public class AppController {
 		return "developer/appinfomodify";
 	}
 	
-	/*@RequestMapping(value = "/upload")  
+	/**
+	 * 上传logo图片（修改操作）
+	 * @param attach
+	 * @param APKName
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/uploadlogo")  
 	@ResponseBody
-    public Object upload(@RequestParam(value="m_logoPicPath",required= false) MultipartFile attach, 
-    					 HttpServletRequest request,HttpSession session) {  
+    public Object uploadLogo(@RequestParam(value="m_logoPicPath",required= false) MultipartFile attach, 
+    						@RequestParam String APKName,HttpServletRequest request) {  
 		String logoPicPath =  null;
 		String logoLocPath =  null;
 		if(!attach.isEmpty()){
@@ -395,9 +399,12 @@ public class AppController {
 			logger.info("uploadFile path: " + path);
 			String oldFileName = attach.getOriginalFilename();//原文件名
 			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
-			if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
+			int filesize = 50000;
+			if(attach.getSize() > filesize){//上传大小不得超过 50k
+            	return "1";//上传LOGO图片大小超过50K
+            }else if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
 			   ||prefix.equalsIgnoreCase("jepg") || prefix.equalsIgnoreCase("pneg")){//上传图片格式
-				 String fileName = appInfo.getAPKName() + ".jpg";//上传LOGO图片命名:apk名称.apk
+				 String fileName = APKName + ".jpg";//上传LOGO图片命名:apk名称.apk
 				 File targetFile = new File(path,fileName);
 				 if(!targetFile.exists()){
 					 targetFile.mkdirs();
@@ -407,29 +414,69 @@ public class AppController {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					request.setAttribute("fileUploadError", " * 上传失败！");
-					return "developer/appinfoadd";
+					return null;
 				} 
 				 logoPicPath = request.getContextPath()+"/statics/uploadfiles/"+fileName;
 				 logoLocPath = path+File.separator+fileName;
+				 return logoPicPath+","+logoLocPath;
 			}else{
-				request.setAttribute("fileUploadError", " * 上传LOGO图片格式不正确！");
-				return "developer/appinfoadd";
+				return "2";//上传LOGO图片格式不正确
 			}
 		}
-		appInfo.setCreatedBy(((DevUser)session.getAttribute(Constants.DEV_USER_SESSION)).getId());
-		appInfo.setCreationDate(new Date());
-		appInfo.setLogoPicPath(logoPicPath);
-		appInfo.setLogoLocPath(logoLocPath);
+		return null;
+	}
+	
+	/**
+	 * 修改appInfo操作时，删除logo图片，并更新数据库
+	 * @param logoPicPath
+	 * @param logoLocPath
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/dellogo")
+	@ResponseBody
+	public String delFile(@RequestParam(value="logopicpath",required=false) String logoPicPath,
+						 @RequestParam(value="logolocpath",required=false) String logoLocPath,
+						 @RequestParam(value="id",required=false) String id){
+		String result= "failed" ;
+		if((logoPicPath == null || logoPicPath.equals("")) &&
+			(logoLocPath == null || logoLocPath.equals(""))){
+			result = "success"; 
+		}else{
+			File file = new File(logoLocPath);
+		    if(file.exists())
+		     if(file.delete()){//删除服务器存储的物理文件
+		    	 try {
+					if(appInfoService.deleteAppLogo(Integer.parseInt(id))){//更新表
+						 result = "success";
+					 }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		}
+		return result;
+	}
+	
+	/**
+	 * 保存修改后的appInfo？？？得不到appInfo？？？
+	 * @param appInfo
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/appinfomodifysave",method=RequestMethod.POST)
+	public String modifySave(AppInfo appInfo,HttpSession session){		
+		appInfo.setModifyBy(((DevUser)session.getAttribute(Constants.DEV_USER_SESSION)).getId());
+		appInfo.setModifyDate(new Date());
 		try {
-			if(appInfoService.add(appInfo)){
+			if(appInfoService.modify(appInfo)){
 				return "redirect:/dev/flatform/app/list";
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return null;
-	}*/
+		return "developer/appinfomodify";
+	}
 }

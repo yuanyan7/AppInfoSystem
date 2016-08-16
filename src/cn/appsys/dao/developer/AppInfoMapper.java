@@ -31,4 +31,5 @@ public interface AppInfoMapper {
 	
 	public AppInfo getAppInfo(@Param(value="id")Integer id,@Param(value="APKName")String APKName)throws Exception;
 
+	public int deleteAppLogo(@Param(value="id")Integer id)throws Exception;
 }

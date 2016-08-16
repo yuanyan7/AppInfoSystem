@@ -384,9 +384,52 @@ public class AppController {
 		return "developer/appinfomodify";
 	}
 	
-	@RequestMapping(value = "/upload")  
+	/*@RequestMapping(value = "/upload")  
 	@ResponseBody
-    public Object upload(@RequestParam(value = "a_fileInputID", required = false) MultipartFile cardFile, 
-    		             @RequestParam(value = "a_fileInputBank", required = false) MultipartFile bankFile, 
+    public Object upload(@RequestParam(value="m_logoPicPath",required= false) MultipartFile attach, 
     					 HttpServletRequest request,HttpSession session) {  
+		String logoPicPath =  null;
+		String logoLocPath =  null;
+		if(!attach.isEmpty()){
+			String path = request.getSession().getServletContext().getRealPath("statics"+java.io.File.separator+"uploadfiles");
+			logger.info("uploadFile path: " + path);
+			String oldFileName = attach.getOriginalFilename();//原文件名
+			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
+			if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
+			   ||prefix.equalsIgnoreCase("jepg") || prefix.equalsIgnoreCase("pneg")){//上传图片格式
+				 String fileName = appInfo.getAPKName() + ".jpg";//上传LOGO图片命名:apk名称.apk
+				 File targetFile = new File(path,fileName);
+				 if(!targetFile.exists()){
+					 targetFile.mkdirs();
+				 }
+				 try {
+					attach.transferTo(targetFile);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					request.setAttribute("fileUploadError", " * 上传失败！");
+					return "developer/appinfoadd";
+				} 
+				 logoPicPath = request.getContextPath()+"/statics/uploadfiles/"+fileName;
+				 logoLocPath = path+File.separator+fileName;
+			}else{
+				request.setAttribute("fileUploadError", " * 上传LOGO图片格式不正确！");
+				return "developer/appinfoadd";
+			}
+		}
+		appInfo.setCreatedBy(((DevUser)session.getAttribute(Constants.DEV_USER_SESSION)).getId());
+		appInfo.setCreationDate(new Date());
+		appInfo.setLogoPicPath(logoPicPath);
+		appInfo.setLogoLocPath(logoLocPath);
+		try {
+			if(appInfoService.add(appInfo)){
+				return "redirect:/dev/flatform/app/list";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}*/
 }

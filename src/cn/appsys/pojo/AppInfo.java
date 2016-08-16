@@ -5,29 +5,29 @@ import java.util.Date;
 
 public class AppInfo {
 	private Integer id;
-	private String softwareName;
-	private String APKName;
-	private String supportROM;
-	private String interfaceLanguage;
-	private Date updateDate;
-	private BigDecimal softwareSize;
-	private Integer devId;
-	private String appInfo;
-	private Integer status;
-	private Date onSaleDate;
-	private Date offSaleDate;
+	private String softwareName;//软件名称
+	private String APKName;//APK名称
+	private String supportROM;//支持ROM
+	private String interfaceLanguage;//界面语言
+	private Date updateDate;//更新日期
+	private BigDecimal softwareSize;//软件大小（单位：M）
+	private Integer devId;//开发者id
+	private String appInfo;//应用简介
+	private Integer status;//app状态id
+	private Date onSaleDate;//上架时间
+	private Date offSaleDate;//下架时间
 	private Integer categoryLevel3;//所属三级分类id
-	private Integer downloads;
-	private Integer flatformId;
+	private Integer downloads;//下载量（单位：次）
+	private Integer flatformId;//app所属平台id
 	private Integer createdBy;
 	private Date creationDate;
 	private Integer modifyBy;
 	private Date modifyDate;
 	
-	private String statusName;
-	private String flatformName;
+	private String statusName;//app状态名称
+	private String flatformName;//app所属平台名称
 	private String categoryLevel3Name;//所属三级分类名称
-	private String devName;
+	private String devName;//开发者名称
 	
 	private Integer categoryLevel1;//所属一级分类id
 	private Integer categoryLevel2;//所属二级分类id
@@ -35,6 +35,21 @@ public class AppInfo {
 	private String categoryLevel1Name;//所属一级分类名称
 	private String categoryLevel2Name;//所属二级分类名称
 	
+	private String apkPath;//apk服务器上的存储径路
+	private String apkUrlPath;//apk的URL路径
+	
+	public String getApkPath() {
+		return apkPath;
+	}
+	public void setApkPath(String apkPath) {
+		this.apkPath = apkPath;
+	}
+	public String getApkUrlPath() {
+		return apkUrlPath;
+	}
+	public void setApkUrlPath(String apkUrlPath) {
+		this.apkUrlPath = apkUrlPath;
+	}
 	public Integer getCategoryLevel3() {
 		return categoryLevel3;
 	}

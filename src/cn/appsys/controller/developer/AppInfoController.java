@@ -1,13 +1,24 @@
 package cn.appsys.controller.developer;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.sun.java.util.jar.pack.Package.File;
+
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.DataDictionary;
@@ -51,7 +62,7 @@ public class AppInfoController {
 		List<AppInfo> appInfoList = null;
 		List<DataDictionary> statusList = null;
 		List<DataDictionary> flatFormList = null;
-		List<AppCategory> categoryLevel1List = null;
+		List<AppCategory> categoryLevel1List = null;//列出一级分类列表，注：二级和三级分类列表通过异步ajax获取
 		//页面容量
 		int pageSize = Constants.pageSize;
 		//当前页码
@@ -122,5 +133,57 @@ public class AppInfoController {
 		model.addAttribute("categoryLevel1List", categoryLevel1List);
 		return "developer/appinfolist";
 	}
+	
+	/**
+	 * 根据parentId查询出相应的分类级别列表
+	 * @param pid
+	 * @return
+	 */
+	@RequestMapping(value="/categorylevellist.json",method=RequestMethod.GET)
+	@ResponseBody
+	public List<AppCategory> getAppCategoryList (@RequestParam String pid){
+		List<AppCategory> categoryLevelList = null;
+		try {
+			categoryLevelList = appCategoryService.getAppCategoryListByParentId(Integer.parseInt(pid));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return categoryLevelList;
+	}
+	/**
+	 * 增加app信息（跳转到新增页面）
+	 * @param appInfo
+	 * @return
+	 */
+	@RequestMapping(value="/add",method=RequestMethod.GET)
+	public String add(@ModelAttribute("appInfo") AppInfo appInfo){
+		return "developer/appinfoadd";
+	}
+	
+	@RequestMapping(value="/addsave",method=RequestMethod.POST)
+	public String addSave(AppInfo appInfo,HttpSession session,HttpServletRequest request,
+			@RequestParam(value="a_apkPath",required= false) MultipartFile attach ){
+		
+		String apkPath = null;
+		if(!attach.isEmpty()){
+			String path = request.getSession().getServletContext().getRealPath("statics"+java.io.File.separator+"uploadfiles");
+			logger.info("uploadFile path: " + path);
+			String oldFileName = attach.getOriginalFilename();//原文件名
+			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
+			int fileSize = 500000;
+			logger.info("uploadFile size: " + attach.getSize());
+			if(attach.getSize() > fileSize){//上传大小不得超过500K
+				request.setAttribute("uploadFileError", " * 上传大小不得超过500k");
+				return "developer/appinfoadd";
+			}else if(){
+				 
+			}
+			
+		}
+		
+		return "developer/appinfoadd";
+	}
+	
 	
 }

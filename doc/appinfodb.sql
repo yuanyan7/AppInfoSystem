@@ -83,12 +83,14 @@ CREATE TABLE `app_info` (
   `modifyDate` datetime DEFAULT NULL COMMENT '最新更新时间',
   `categoryLevel1` bigint(30) DEFAULT NULL COMMENT '所属一级分类（来源于：data_dictionary）',
   `categoryLevel2` bigint(30) DEFAULT NULL COMMENT '所属二级分类（来源于：data_dictionary）',
+  `apkPath` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'apk服务器上的存储径路',
+  `apkUrlPath` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'apk的URL路径',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `app_info` */
 
-insert  into `app_info`(`id`,`softwareName`,`APKName`,`supportROM`,`interfaceLanguage`,`softwareSize`,`updateDate`,`devId`,`appInfo`,`status`,`onSaleDate`,`offSaleDate`,`flatformId`,`categoryLevel3`,`downloads`,`createdBy`,`creationDate`,`modifyBy`,`modifyDate`,`categoryLevel1`,`categoryLevel2`) values (1,'跑步记录器:runtastic PRO','com.runtastic.android.pro2','4.1及更高版本','英文软件','32.64',NULL,1,'跑步记录器runtastic PRO是一款基于GPS的运动记录软件，可以自动记录时间，距离，燃烧的卡路里，速度，可以在地图上查看你当前位置和路线等等功能',1,NULL,NULL,1,15,3000,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `app_info`(`id`,`softwareName`,`APKName`,`supportROM`,`interfaceLanguage`,`softwareSize`,`updateDate`,`devId`,`appInfo`,`status`,`onSaleDate`,`offSaleDate`,`flatformId`,`categoryLevel3`,`downloads`,`createdBy`,`creationDate`,`modifyBy`,`modifyDate`,`categoryLevel1`,`categoryLevel2`,`apkPath`,`apkUrlPath`) values (1,'跑步记录器:runtastic PRO','com.runtastic.android.pro2','4.1及更高版本','英文软件','32.64',NULL,1,'跑步记录器runtastic PRO是一款基于GPS的运动记录软件，可以自动记录时间，距离，燃烧的卡路里，速度，可以在地图上查看你当前位置和路线等等功能',1,NULL,NULL,1,15,3000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `app_version` */
 

@@ -9,14 +9,20 @@ public class AppVersion {
 	private String versionNo;
 	private String versionInfo;
 	private Integer publishStatus;
-	private String downloadLink;
-	private String logoPicPath;
+	private String downloadLink;//apk文件下载链接
 	private BigDecimal versionSize;
 	private Integer createdBy;
 	private Date creationDate;
 	private Integer modifyBy;
 	private Date modifyDate;
+	private String apkLocPath;//apk文件的服务器存储路径
 	
+	public String getApkLocPath() {
+		return apkLocPath;
+	}
+	public void setApkLocPath(String apkLocPath) {
+		this.apkLocPath = apkLocPath;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -52,12 +58,6 @@ public class AppVersion {
 	}
 	public void setDownloadLink(String downloadLink) {
 		this.downloadLink = downloadLink;
-	}
-	public String getLogoPicPath() {
-		return logoPicPath;
-	}
-	public void setLogoPicPath(String logoPicPath) {
-		this.logoPicPath = logoPicPath;
 	}
 	public BigDecimal getVersionSize() {
 		return versionSize;

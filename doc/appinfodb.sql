@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `app_info`;
 CREATE TABLE `app_info` (
   `id` bigint(30) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `softwareName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '软件名称',
-  `APKName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'APK名称',
+  `APKName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'APK名称（唯一）',
   `supportROM` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '支持ROM',
   `interfaceLanguage` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '界面语言',
   `softwareSize` decimal(20,2) DEFAULT NULL COMMENT '软件大小（单位：M）',
@@ -83,14 +83,14 @@ CREATE TABLE `app_info` (
   `modifyDate` datetime DEFAULT NULL COMMENT '最新更新时间',
   `categoryLevel1` bigint(30) DEFAULT NULL COMMENT '所属一级分类（来源于：data_dictionary）',
   `categoryLevel2` bigint(30) DEFAULT NULL COMMENT '所属二级分类（来源于：data_dictionary）',
-  `apkPath` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'apk服务器上的存储径路',
-  `apkUrlPath` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'apk的URL路径',
+  `logoPicPath` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LOGO图片url路径',
+  `logoLocPath` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LOGO图片的服务器存储路径',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `app_info` */
 
-insert  into `app_info`(`id`,`softwareName`,`APKName`,`supportROM`,`interfaceLanguage`,`softwareSize`,`updateDate`,`devId`,`appInfo`,`status`,`onSaleDate`,`offSaleDate`,`flatformId`,`categoryLevel3`,`downloads`,`createdBy`,`creationDate`,`modifyBy`,`modifyDate`,`categoryLevel1`,`categoryLevel2`,`apkPath`,`apkUrlPath`) values (1,'跑步记录器:runtastic PRO','com.runtastic.android.pro2','4.1及更高版本','英文软件','32.64',NULL,1,'跑步记录器runtastic PRO是一款基于GPS的运动记录软件，可以自动记录时间，距离，燃烧的卡路里，速度，可以在地图上查看你当前位置和路线等等功能',1,NULL,NULL,1,15,3000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `app_info`(`id`,`softwareName`,`APKName`,`supportROM`,`interfaceLanguage`,`softwareSize`,`updateDate`,`devId`,`appInfo`,`status`,`onSaleDate`,`offSaleDate`,`flatformId`,`categoryLevel3`,`downloads`,`createdBy`,`creationDate`,`modifyBy`,`modifyDate`,`categoryLevel1`,`categoryLevel2`,`logoPicPath`,`logoLocPath`) values (1,'跑步记录器:runtastic PRO','com.runtastic.android.pro2','4.1及更高版本','英文软件','32.64',NULL,1,'跑步记录器runtastic PRO是一款基于GPS的运动记录软件，可以自动记录时间，距离，燃烧的卡路里，速度，可以在地图上查看你当前位置和路线等等功能',1,NULL,NULL,1,15,3000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `app_version` */
 
@@ -103,12 +103,12 @@ CREATE TABLE `app_version` (
   `versionInfo` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '版本介绍',
   `publishStatus` bigint(30) DEFAULT NULL COMMENT '发布状态（来源于：data_dictionary，1 不发布 2 已发布 3 预发布）',
   `downloadLink` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '下载链接',
-  `logoPicPath` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LOGO图片存储路径',
   `versionSize` decimal(20,2) DEFAULT NULL COMMENT '版本大小（单位：M）',
   `createdBy` bigint(30) DEFAULT NULL COMMENT '创建者（来源于dev_user开发者信息表的用户id）',
   `creationDate` datetime DEFAULT NULL COMMENT '创建时间',
   `modifyBy` bigint(30) DEFAULT NULL COMMENT '更新者（来源于dev_user开发者信息表的用户id）',
   `modifyDate` datetime DEFAULT NULL COMMENT '最新更新时间',
+  `apkLocPath` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'apk文件的服务器存储路径',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

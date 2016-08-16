@@ -63,10 +63,11 @@ public interface AppInfoService {
 							Integer queryCategoryLevel1,Integer queryCategoryLevel2,
 							Integer queryCategoryLevel3,Integer queryFlatformId,Integer devId)throws Exception;
 	/**
-	 * 根据id查找appInfo
+	 * 根据id、apkName查找appInfo
 	 * @param id
 	 * @return
 	 * @throws Exception
 	 */
-	public AppInfo getAppInfoById(Integer id)throws Exception;
+	public AppInfo getAppInfo(Integer id,String APKName)throws Exception;
+	
 }

@@ -35,20 +35,20 @@ public class AppInfo {
 	private String categoryLevel1Name;//所属一级分类名称
 	private String categoryLevel2Name;//所属二级分类名称
 	
-	private String apkPath;//apk服务器上的存储径路
-	private String apkUrlPath;//apk的URL路径
+	private String logoPicPath;//LOGO图片URL路径
+	private String logoLocPath;//LOGO图片的服务器存储路径
 	
-	public String getApkPath() {
-		return apkPath;
+	public String getLogoLocPath() {
+		return logoLocPath;
 	}
-	public void setApkPath(String apkPath) {
-		this.apkPath = apkPath;
+	public void setLogoLocPath(String logoLocPath) {
+		this.logoLocPath = logoLocPath;
 	}
-	public String getApkUrlPath() {
-		return apkUrlPath;
+	public String getLogoPicPath() {
+		return logoPicPath;
 	}
-	public void setApkUrlPath(String apkUrlPath) {
-		this.apkUrlPath = apkUrlPath;
+	public void setLogoPicPath(String logoPicPath) {
+		this.logoPicPath = logoPicPath;
 	}
 	public Integer getCategoryLevel3() {
 		return categoryLevel3;

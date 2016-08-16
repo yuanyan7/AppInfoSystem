@@ -29,6 +29,6 @@ public interface AppInfoMapper {
 							   @Param(value="categoryLevel3")Integer queryCategoryLevel3,
 							   @Param(value="flatformId")Integer queryFlatformId)throws Exception;
 	
-	public AppInfo getAppInfoById(@Param(value="id")Integer id)throws Exception;
+	public AppInfo getAppInfo(@Param(value="id")Integer id,@Param(value="APKName")String APKName)throws Exception;
 
 }

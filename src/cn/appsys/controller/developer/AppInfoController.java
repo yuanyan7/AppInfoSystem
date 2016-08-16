@@ -1,30 +1,37 @@
 package cn.appsys.controller.developer;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sun.java.util.jar.pack.Package.File;
+import com.alibaba.fastjson.JSONArray;
+import com.mysql.jdbc.StringUtils;
 
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
+import cn.appsys.pojo.AppVersion;
 import cn.appsys.pojo.DataDictionary;
 import cn.appsys.pojo.DevUser;
 import cn.appsys.service.developer.AppCategoryService;
 import cn.appsys.service.developer.AppInfoService;
+import cn.appsys.service.developer.AppVersionService;
 import cn.appsys.service.developer.DataDictionaryService;
 import cn.appsys.tools.Constants;
 import cn.appsys.tools.PageSupport;
@@ -39,6 +46,8 @@ public class AppInfoController {
 	private DataDictionaryService dataDictionaryService;
 	@Resource 
 	private AppCategoryService appCategoryService;
+	@Resource
+	private AppVersionService appVersionService;
 	
 	@RequestMapping(value="/list")
 	public String getAppInfoList(Model model,HttpSession session,
@@ -152,38 +161,226 @@ public class AppInfoController {
 		return categoryLevelList;
 	}
 	/**
-	 * 增加app信息（跳转到新增页面）
+	 * 增加app信息（跳转到新增appinfo页面）
 	 * @param appInfo
 	 * @return
 	 */
-	@RequestMapping(value="/add",method=RequestMethod.GET)
+	@RequestMapping(value="/appinfoadd",method=RequestMethod.GET)
 	public String add(@ModelAttribute("appInfo") AppInfo appInfo){
 		return "developer/appinfoadd";
 	}
 	
-	@RequestMapping(value="/addsave",method=RequestMethod.POST)
+	/**
+	 * 保存新增appInfo（主表）的数据--上传app的LOGO图片
+	 * @param appInfo
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/appinfoaddsave",method=RequestMethod.POST)
 	public String addSave(AppInfo appInfo,HttpSession session,HttpServletRequest request,
-			@RequestParam(value="a_apkPath",required= false) MultipartFile attach ){
+					@RequestParam(value="a_logoPicPath",required= false) MultipartFile attach){		
 		
-		String apkPath = null;
+		String logoPicPath =  null;
+		String logoLocPath =  null;
 		if(!attach.isEmpty()){
 			String path = request.getSession().getServletContext().getRealPath("statics"+java.io.File.separator+"uploadfiles");
 			logger.info("uploadFile path: " + path);
 			String oldFileName = attach.getOriginalFilename();//原文件名
 			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
-			int fileSize = 500000;
-			logger.info("uploadFile size: " + attach.getSize());
-			if(attach.getSize() > fileSize){//上传大小不得超过500K
-				request.setAttribute("uploadFileError", " * 上传大小不得超过500k");
+			if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
+			   ||prefix.equalsIgnoreCase("jepg") || prefix.equalsIgnoreCase("pneg")){//上传图片格式
+				 String fileName = appInfo.getAPKName() + ".jpg";//上传LOGO图片命名:apk名称.apk
+				 File targetFile = new File(path,fileName);
+				 if(!targetFile.exists()){
+					 targetFile.mkdirs();
+				 }
+				 try {
+					attach.transferTo(targetFile);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					request.setAttribute("fileUploadError", " * 上传失败！");
+					return "developer/appinfoadd";
+				} 
+				 logoPicPath = request.getContextPath()+"/statics/uploadfiles/"+fileName;
+				 logoLocPath = path+File.separator+fileName;
+			}else{
+				request.setAttribute("fileUploadError", " * 上传LOGO图片格式不正确！");
 				return "developer/appinfoadd";
-			}else if(){
-				 
 			}
-			
 		}
-		
+		appInfo.setCreatedBy(((DevUser)session.getAttribute(Constants.DEV_USER_SESSION)).getId());
+		appInfo.setCreationDate(new Date());
+		appInfo.setLogoPicPath(logoPicPath);
+		appInfo.setLogoLocPath(logoLocPath);
+		try {
+			if(appInfoService.add(appInfo)){
+				return "redirect:/dev/flatform/list";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "developer/appinfoadd";
 	}
 	
+	/**
+	 * 增加appversion信息（跳转到新增app版本页面）
+	 * @param appInfo
+	 * @return
+	 */
+	@RequestMapping(value="/appversionadd/{id}",method=RequestMethod.GET)
+	public String addVersion(@PathVariable String id,Model model){
+		AppVersion appVersion = new AppVersion();
+		appVersion.setAppId(Integer.parseInt(id));
+		model.addAttribute(appVersion);
+		List<AppVersion> appVersionList = null;
+		try {
+			appVersionList = appVersionService.getAppVersionList(Integer.parseInt(id));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("appVersionList", appVersionList);
+		return "developer/appversionadd";
+	}
+	/**
+	 * 保存新增appversion数据（子表）-上传该版本的apk包
+	 * @param appInfo
+	 * @param appVersion
+	 * @param session
+	 * @param request
+	 * @param attach
+	 * @return
+	 */
+	@RequestMapping(value="/addversionsave",method=RequestMethod.POST)
+	public String addVersionSave(AppVersion appVersion,HttpSession session,HttpServletRequest request,
+						@RequestParam(value="a_downloadLink",required= false) MultipartFile attach ){		
+		String downloadLink =  null;
+		String apkLocPath = null;
+		if(!attach.isEmpty()){
+			String path = request.getSession().getServletContext().getRealPath("statics"+java.io.File.separator+"uploadfiles");
+			logger.info("uploadFile path: " + path);
+			String oldFileName = attach.getOriginalFilename();//原文件名
+			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
+			if(prefix.equalsIgnoreCase("apk")){//apk文件命名：apk名称+版本号+.apk
+				 String apkName = null;
+				 try {
+					apkName = appInfoService.getAppInfo(appVersion.getAppId(),null).getAPKName();
+				 } catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				 }
+				 if(apkName == null || "".equals(apkName)){
+					 request.setAttribute("fileUploadError", " * APK信息不完整！");
+					 return "developer/appversionadd";
+				 }
+				 String fileName = apkName + appVersion.getVersionNo() + ".apk";
+				 File targetFile = new File(path,fileName);
+				 if(!targetFile.exists()){
+					 targetFile.mkdirs();
+				 }
+				 try {
+					attach.transferTo(targetFile);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					request.setAttribute("fileUploadError", " * 上传失败！");
+					return "developer/appversionadd";
+				} 
+				downloadLink = request.getContextPath()+"/statics/uploadfiles/"+fileName;
+				apkLocPath = path+File.separator+fileName;
+			}else{
+				request.setAttribute("fileUploadError", " * 上传apk文件格式不正确！");
+				return "developer/appversionadd";
+			}
+		}
+		appVersion.setCreatedBy(((DevUser)session.getAttribute(Constants.DEV_USER_SESSION)).getId());
+		appVersion.setCreationDate(new Date());
+		appVersion.setDownloadLink(downloadLink);
+		appVersion.setApkLocPath(apkLocPath);
+		try {
+			if(appVersionService.add(appVersion)){
+				return "redirect:/dev/flatform/list";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "developer/appversionadd";
+	}
 	
+	/**
+	 * 判断APKName是否唯一
+	 * @param apkName
+	 * @return
+	 */
+	@RequestMapping(value="/apkexist.json",method=RequestMethod.GET)
+	@ResponseBody
+	public Object apkNameIsExit(@RequestParam String APKName){
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		if(StringUtils.isNullOrEmpty(APKName)){
+			resultMap.put("APKName", "empty");
+		}else{
+			AppInfo appInfo = null;
+			try {
+				appInfo = appInfoService.getAppInfo(null, APKName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(null != appInfo)
+				resultMap.put("APKName", "exist");
+			else
+				resultMap.put("APKName", "noexist");
+		}
+		return JSONArray.toJSONString(resultMap);
+	}
+	
+	/**
+	 * 查看app信息，包括app基本信息和版本信息列表（跳转到查看页面）
+	 * @param appInfo
+	 * @return
+	 */
+	@RequestMapping(value="/appview/{id}",method=RequestMethod.GET)
+	public String view(@PathVariable String id,Model model){
+		AppInfo appInfo = null;
+		List<AppVersion> appVersionList = null;
+		try {
+			appInfo = appInfoService.getAppInfo(Integer.parseInt(id),null);
+			appVersionList = appVersionService.getAppVersionList(Integer.parseInt(id));
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("appVersionList", appVersionList);
+		model.addAttribute(appInfo);
+		return "developer/appinfoview";
+	}
+	
+	/**
+	 * 修改app信息，包括：修改app基本信息（appInfo）和修改版本信息（appVersion）
+	 * ？是否限定某些状态下不可修改，分为两步实现：
+	 * 1 修改app基本信息（appInfo）
+	 * 2 修改版本信息（appVersion）
+	 */
+	
+	/**
+	 * 修改appInfo信息
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/appinfomodify/{id}",method=RequestMethod.GET)
+	public String modifyAppInfo(@PathVariable String id,Model model){
+		AppInfo appInfo = null;
+		try {
+			appInfo = appInfoService.getAppInfo(Integer.parseInt(id),null);
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute(appInfo);
+		return "developer/appinfomodify";
+	}
 }

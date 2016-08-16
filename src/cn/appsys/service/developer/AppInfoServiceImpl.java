@@ -42,9 +42,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 	}
 
 	@Override
-	public AppInfo getAppInfoById(Integer id) throws Exception {
+	public AppInfo getAppInfo(Integer id,String APKName) throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.getAppInfoById(id);
+		return mapper.getAppInfo(id,APKName);
 	}
 
 	@Override

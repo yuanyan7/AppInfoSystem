@@ -37,9 +37,9 @@ import cn.appsys.tools.Constants;
 import cn.appsys.tools.PageSupport;
 
 @Controller
-@RequestMapping(value="/dev/flatform")
-public class AppInfoController {
-	private Logger logger = Logger.getLogger(AppInfoController.class);
+@RequestMapping(value="/dev/flatform/app")
+public class AppController {
+	private Logger logger = Logger.getLogger(AppController.class);
 	@Resource
 	private AppInfoService appInfoService;
 	@Resource 
@@ -215,7 +215,7 @@ public class AppInfoController {
 		appInfo.setLogoLocPath(logoLocPath);
 		try {
 			if(appInfoService.add(appInfo)){
-				return "redirect:/dev/flatform/list";
+				return "redirect:/dev/flatform/app/list";
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -301,7 +301,7 @@ public class AppInfoController {
 		appVersion.setApkLocPath(apkLocPath);
 		try {
 			if(appVersionService.add(appVersion)){
-				return "redirect:/dev/flatform/list";
+				return "redirect:/dev/flatform/app/list";
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -360,13 +360,13 @@ public class AppInfoController {
 	
 	/**
 	 * 修改app信息，包括：修改app基本信息（appInfo）和修改版本信息（appVersion）
-	 * ？是否限定某些状态下不可修改，分为两步实现：
+	 * 分为两步实现：
 	 * 1 修改app基本信息（appInfo）
 	 * 2 修改版本信息（appVersion）
 	 */
 	
 	/**
-	 * 修改appInfo信息
+	 * 修改appInfo信息（跳转到修改appInfo页面）
 	 * @param id
 	 * @param model
 	 * @return

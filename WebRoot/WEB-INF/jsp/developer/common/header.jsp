@@ -82,16 +82,16 @@
 									<ul class="nav child_menu">
 										<li><a href="#">APP开发者账户申请</a>
 										</li>
-										<li><a href="#">账户信息维护</a>
+										<li><a href="#">个人账户信息维护</a>
 										</li>
 									</ul></li>
 								<li><a><i class="fa fa-edit"></i> APP应用管理<span
 										class="fa fa-chevron-down"></span>
 								</a>
 									<ul class="nav child_menu">
-										<li><a href="list">APP维护</a>
+										<li><a href="${pageContext.request.contextPath }/dev/flatform/app/list">APP维护</a>
 										</li>
-										<li><a href="form.html">APP发布</a>
+										<li><a href="${pageContext.request.contextPath }/dev/flatform/app/public">APP发布</a>
 										</li>
 									</ul></li>
 							</ul>

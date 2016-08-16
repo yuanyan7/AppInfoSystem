@@ -60,8 +60,9 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> APP管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.html">APP分类管理</a></li>
-                      <li><a href="index2.html">广告推广</a></li>
+                      <li><a href="${pageContext.request.contextPath }/manager/backend/review">APP审核</a></li>
+                      <li><a href="${pageContext.request.contextPath }/manager/backend/category">APP分类管理</a></li>
+                      <li><a href="${pageContext.request.contextPath }/manager/backend/ad">广告推广</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>

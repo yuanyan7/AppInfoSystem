@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import com.sun.istack.internal.logging.Logger;
-
 import cn.appsys.dao.developer.AppInfoMapper;
 import cn.appsys.dao.developer.AppVersionMapper;
 import cn.appsys.pojo.AppInfo;

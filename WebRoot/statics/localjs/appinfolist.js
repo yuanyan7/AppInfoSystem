@@ -64,11 +64,21 @@ $(".addVersion").on("click",function(){
 });
 $(".modifyVersion").on("click",function(){
 	var obj = $(this);
-	window.location.href="appversionmodify/"+ obj.attr("appinfoid");
+	var status = obj.attr("status");
+	if(status == "1" || status == "3"){//待审核、审核未通过状态下才可以进行修改操作
+		window.location.href="appversionmodify/"+ obj.attr("appinfoid");
+	}else{
+		alert("该APP应用的状态为：【"+obj.attr("statusname")+"】,不能修改其版本信息，只可进行【新增版本】操作！");
+	}
 });
 $(".modifyAppInfo").on("click",function(){
 	var obj = $(this);
-	window.location.href="appinfomodify/"+ obj.attr("appinfoid");
+	var status = obj.attr("status");
+	if(status == "1" || status == "3"){//待审核、审核未通过状态下才可以进行修改操作
+		window.location.href="appinfomodify/"+ obj.attr("appinfoid");
+	}else{
+		alert("该APP应用的状态为：【"+obj.attr("statusname")+"】,不能修改！");
+	}
 });
 $(".viewApp").on("click",function(){
 	var obj = $(this);

@@ -184,8 +184,12 @@
 										<td><fmt:formatDate value="${appInfo.onSaleDate }" pattern="yyyy-MM-dd"/></td>
 										<td>
 										<button type="button" class="btn btn-default addVersion" appinfoid=${appInfo.id } data-toggle="tooltip" data-placement="top" title="" data-original-title="新增APP版本信息">新增版本</button>
-										<button type="button" class="btn btn-default modifyVersion" appinfoid=${appInfo.id } data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP最新版本信息">修改版本</button>
-										<button type="button" class="btn btn-default modifyAppInfo" appinfoid=${appInfo.id } data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP基础信息">修改</button>
+										<button type="button" class="btn btn-default modifyVersion" 
+											appinfoid=${appInfo.id } status=${appInfo.status } statusname=${appInfo.statusName }
+											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP最新版本信息">修改版本</button>
+										<button type="button" class="btn btn-default modifyAppInfo" 
+											appinfoid=${appInfo.id } status=${appInfo.status } statusname=${appInfo.statusName }
+											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP基础信息">修改</button>
 										<button type="button" class="btn btn-default viewApp" appinfoid=${appInfo.id }  data-toggle="tooltip" data-placement="top" title="" data-original-title="查看APP基础信息以及全部版本信息">查看</button>
 										<button type="button" class="btn btn-default deleteApp" appinfoid=${appInfo.id }  appsoftwarename=${appInfo.softwareName } data-toggle="tooltip" data-placement="top" title="" data-original-title="删除APP基础信息以及全部版本信息">删除</button>
 										</td>

@@ -22,7 +22,11 @@
 				}
 				
 				.x_content form ul li {
-					width: 450px;
+					width: 350px;
+					display: inline-block;
+					height:40px;
+					line-height: 40px;
+					vertical-align: middle;
 				}
 				</style>
 				
@@ -35,9 +39,7 @@
 							</div>
 						</div>
 					</li>
-				</ul>
-				<div class="clearfix"></div>
-				<ul>
+					
 					<li>
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">APP状态</label>
@@ -54,9 +56,6 @@
 							</div>
 						</div>
 					</li>
-				</ul>
-				<div class="clearfix"></div>
-				<ul>
 					<li>
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">所属平台</label>
@@ -73,9 +72,6 @@
 							</div>
 						</div>
 					</li>
-				</ul>
-				<div class="clearfix"></div>
-				<ul>
 					<li>
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">一级分类</label>
@@ -92,9 +88,6 @@
 							</div>
 						</div>
 					</li>
-				</ul>
-				<div class="clearfix"></div>
-				<ul>
 					<li>
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">二级分类</label>
@@ -105,9 +98,6 @@
 							</div>
 						</div>
 					</li>
-				</ul>
-				<div class="clearfix"></div>
-				<ul>
 					<li>
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">三级分类</label>
@@ -116,8 +106,8 @@
 							</div>
 						</div>
 					</li>
+					<li><button type="submit" class="btn btn-primary"> 查 &nbsp;&nbsp;&nbsp;&nbsp;询 </button></li>
 				</ul>
-				<button type="submit" class="btn btn-primary"> 查 &nbsp;&nbsp;&nbsp;&nbsp;询 </button>
 			</form>
 		</div>
 	</div>

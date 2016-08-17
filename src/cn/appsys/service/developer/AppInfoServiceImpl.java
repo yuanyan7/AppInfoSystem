@@ -2,10 +2,10 @@ package cn.appsys.service.developer;
 
 import java.io.File;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
-import com.sun.istack.internal.logging.Logger;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
 
 import cn.appsys.dao.developer.AppInfoMapper;
 import cn.appsys.dao.developer.AppVersionMapper;

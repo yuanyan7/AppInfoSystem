@@ -425,7 +425,7 @@ public class AppController {
 	
 	/**
 	 * 保存修改后的appVersion
-	 * @param appInfo
+	 * @param appVersion
 	 * @param session
 	 * @return
 	 */

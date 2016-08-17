@@ -47,5 +47,14 @@ public class AppVersionServiceImpl implements AppVersionService {
 		// TODO Auto-generated method stub
 		return mapper.getAppVersionById(id);
 	}
+	@Override
+	public boolean modify(AppVersion appVersion) throws Exception {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		if(mapper.modify(appVersion) > 0){
+			flag = true;
+		}
+		return flag;
+	}
 
 }

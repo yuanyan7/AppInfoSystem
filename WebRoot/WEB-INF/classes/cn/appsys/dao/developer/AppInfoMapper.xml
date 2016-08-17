@@ -7,11 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="add" parameterType="AppInfo">
 		insert into app_info (softwareName,APKName,supportROM,interfaceLanguage,updateDate,softwareSize,
 							devId,appInfo,status,onSaleDate,offSaleDate,categoryLevel1,categoryLevel2，
-							categoryLevel3，downloads,platformId,logoPicPath,createdBy,creationDate)
+							categoryLevel3，downloads,platformId,logoPicPath,logoLocPath,createdBy,creationDate)
 				values(#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{updateDate},
 					   #{softwareSize},#{devId},#{appInfo},#{status},#{onSaleDate},#{offSaleDate},
 					   #{categoryLevel1},#{categoryLevel2},#{categoryLevel3},#{downloads},
-					   #{platformId},#{logoPicPath},#{createdBy},#{creationDate})
+					   #{platformId},#{logoPicPath},#{logoLocPath},#{createdBy},#{creationDate})
 	</insert>
 	
 	<update id="modify" parameterType="AppInfo">
@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="downloads != null">downloads=#{downloads}</if>
 			<if test="platformId != null">platformId=#{platformId}</if>
 			<if test="logoPicPath != null">logoPicPath=#{logoPicPath}</if>
+			<if test="logoLocPath != null">logoLocPath=#{logoLocPath}</if>
 			<if test="modifyBy != null">modifyBy=#{modifyBy}</if>
 			<if test="modifyDate != null">modifyDate=#{modifyDate}</if>
 		</trim>
@@ -57,7 +58,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(select categoryName from app_category c where  c.id=a.categoryLevel3) as categoryLevel3Name,
 				a.downloads,
 				a.onSaleDate,
-				a.versionId
+				a.versionId,
+				(select v.versionNo from app_version v where v.id=a.versionId ) as versionNo
 			from  app_info a
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="softwareName != null and softwareName != ''">

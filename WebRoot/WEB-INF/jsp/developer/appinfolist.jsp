@@ -196,7 +196,7 @@
 										<td>${appInfo.categoryLevel1Name } -> ${appInfo.categoryLevel2Name } -> ${appInfo.categoryLevel3Name }</td>
 										<td>${appInfo.statusName }</td>
 										<td>${appInfo.downloads }</td>
-										<td>${appInfo.versionId }</td>
+										<td>${appInfo.versionNo }</td>
 										<td>
 										<button type="button" class="btn btn-default addVersion" appinfoid=${appInfo.id } data-toggle="tooltip" data-placement="top" title="" data-original-title="新增APP版本信息">新增版本</button>
 										<button type="button" class="btn btn-default modifyVersion" 

@@ -25,4 +25,12 @@ public interface AppVersionService {
 	 * @throws Exception
 	 */
 	public AppVersion getAppVersionById(Integer id)throws Exception;
+	
+	/**
+	 * 修改app版本信息
+	 * @param appVersion
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean modify(AppVersion appVersion)throws Exception;
 }

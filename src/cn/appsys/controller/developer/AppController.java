@@ -424,6 +424,27 @@ public class AppController {
 	}
 	
 	/**
+	 * 保存修改后的appVersion
+	 * @param appInfo
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/appversionmodifysave",method=RequestMethod.POST)
+	public String modifyAppVersionSave(AppVersion appVersion,HttpSession session){		
+		appVersion.setModifyBy(((DevUser)session.getAttribute(Constants.DEV_USER_SESSION)).getId());
+		appVersion.setModifyDate(new Date());
+		try {
+			if(appVersionService.modify(appVersion)){
+				return "redirect:/dev/flatform/app/list";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "developer/appversionmodify";
+	}
+	
+	/**
 	 * 上传logo图片（修改操作）
 	 * @param attach
 	 * @param APKName

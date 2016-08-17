@@ -56,7 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				a.categoryLevel3,
 				(select categoryName from app_category c where  c.id=a.categoryLevel3) as categoryLevel3Name,
 				a.downloads,
-				a.onSaleDate
+				a.onSaleDate,
+				a.versionId
 			from  app_info a
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="softwareName != null and softwareName != ''">
@@ -135,5 +136,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				logoLocPath = null 
 			where id = #{id}
 	</update>
-	
+	<update id="updateVersionId">
+		update app_info 
+			set versionId=#{versionId}
+			where id = #{id}
+	</update>
 </mapper>

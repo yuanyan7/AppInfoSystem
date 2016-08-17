@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by creationDate DESC
 	</select>
 	
-	<insert id="add" parameterType="AppVersion">
+	<insert id="add" parameterType="AppVersion" useGeneratedKeys="true" keyProperty="id">
 		insert into app_version (appId,versionNo,versionInfo,publishStatus,
 								downloadLink,versionSize,createdBy,creationDate)
 				values(#{appId},#{versionNo},#{versionInfo},#{publishStatus},#{downloadLink},
@@ -28,6 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteVersionByAppId">
 		delete from app_version where appId = #{appId}
 	</delete>
-	
+	<select id="getAppVersionById" resultType="AppVersion">
+		select * from app_version where id = #{id}
+	</select>
 	
 </mapper>

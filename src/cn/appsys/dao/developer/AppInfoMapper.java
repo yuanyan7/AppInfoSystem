@@ -33,4 +33,13 @@ public interface AppInfoMapper {
 	public AppInfo getAppInfo(@Param(value="id")Integer id,@Param(value="APKName")String APKName)throws Exception;
 
 	public int deleteAppLogo(@Param(value="id")Integer id)throws Exception;
+	
+	/**
+	 * 根据appId，更新最新versionId
+	 * @param versionId
+	 * @param appId
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateVersionId(@Param(value="versionId")Integer versionId,@Param(value="id")Integer appId)throws Exception;
 }

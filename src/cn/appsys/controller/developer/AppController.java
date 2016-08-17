@@ -68,6 +68,8 @@ public class AppController {
 		List<DataDictionary> statusList = null;
 		List<DataDictionary> flatFormList = null;
 		List<AppCategory> categoryLevel1List = null;//列出一级分类列表，注：二级和三级分类列表通过异步ajax获取
+		List<AppCategory> categoryLevel2List = null;
+		List<AppCategory> categoryLevel3List = null;
 		//页面容量
 		int pageSize = Constants.pageSize;
 		//当前页码
@@ -143,6 +145,16 @@ public class AppController {
 		model.addAttribute("queryCategoryLevel2", queryCategoryLevel2);
 		model.addAttribute("queryCategoryLevel3", queryCategoryLevel3);
 		model.addAttribute("queryFlatformId", queryFlatformId);
+		
+		//二级分类列表和三级分类列表---回显
+		if(queryCategoryLevel2 != null && !queryCategoryLevel2.equals("")){
+			categoryLevel2List = getCategoryList(queryCategoryLevel1.toString());
+			model.addAttribute("categoryLevel2List", categoryLevel2List);
+		}
+		if(queryCategoryLevel3 != null && !queryCategoryLevel3.equals("")){
+			categoryLevel3List = getCategoryList(queryCategoryLevel2.toString());
+			model.addAttribute("categoryLevel3List", categoryLevel3List);
+		}
 		return "developer/appinfolist";
 	}
 	
@@ -155,6 +167,10 @@ public class AppController {
 	@ResponseBody
 	public List<AppCategory> getAppCategoryList (@RequestParam String pid){
 		logger.debug("getAppCategoryList pid ============ " + pid);
+		return getCategoryList(pid);
+	}
+	
+	public List<AppCategory> getCategoryList (String pid){
 		List<AppCategory> categoryLevelList = null;
 		try {
 			categoryLevelList = appCategoryService.getAppCategoryListByParentId(Integer.parseInt(pid));
@@ -263,7 +279,7 @@ public class AppController {
 		String downloadLink =  null;
 		String apkLocPath = null;
 		if(!attach.isEmpty()){
-			String path = request.getSession().getServletContext().getRealPath("statics"+java.io.File.separator+"uploadfiles");
+			String path = request.getSession().getServletContext().getRealPath("statics"+File.separator+"uploadfiles");
 			logger.info("uploadFile path: " + path);
 			String oldFileName = attach.getOriginalFilename();//原文件名
 			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
@@ -304,7 +320,7 @@ public class AppController {
 		appVersion.setDownloadLink(downloadLink);
 		appVersion.setApkLocPath(apkLocPath);
 		try {
-			if(appVersionService.add(appVersion)){
+			if(appVersionService.appsysadd(appVersion)){
 				return "redirect:/dev/flatform/app/list";
 			}
 		} catch (Exception e) {
@@ -394,16 +410,16 @@ public class AppController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/appversionmodify/{id}",method=RequestMethod.GET)
-	public String modifyAppVersion(@PathVariable String id,Model model){
-		AppInfo appInfo = null;
+	@RequestMapping(value="/appversionmodify/{versionid}",method=RequestMethod.GET)
+	public String modifyAppVersion(@PathVariable String versionid,Model model){
+		AppVersion appVersion = null;
 		try {
-			appInfo = appInfoService.getAppInfo(Integer.parseInt(id),null);
+			appVersion = appVersionService.getAppVersionById(Integer.parseInt(versionid));
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addAttribute(appInfo);
+		model.addAttribute(appVersion);
 		return "developer/appversionmodify";
 	}
 	

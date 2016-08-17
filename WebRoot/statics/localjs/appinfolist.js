@@ -25,7 +25,9 @@ $("#queryCategoryLevel1").change(function(){
 		var options = "<option value=\"\">--请选择--</option>";
 		$("#queryCategoryLevel2").html(options);
 	}
-	
+	$("#queryCategoryLevel3").html("");
+	var options = "<option value=\"\">--请选择--</option>";
+	$("#queryCategoryLevel3").html(options);
 });
 
 $("#queryCategoryLevel2").change(function(){
@@ -65,8 +67,13 @@ $(".addVersion").on("click",function(){
 $(".modifyVersion").on("click",function(){
 	var obj = $(this);
 	var status = obj.attr("status");
+	var versionid = obj.attr("versionid");
 	if(status == "1" || status == "3"){//待审核、审核未通过状态下才可以进行修改操作
-		window.location.href="appversionmodify/"+ obj.attr("appinfoid");
+		if(versionid == null || versionid == ""){
+			alert("该APP应用无版本信息，请先增加版本信息！");
+		}else{
+			window.location.href="appversionmodify/"+ versionid;
+		}
 	}else{
 		alert("该APP应用的状态为：【"+obj.attr("statusname")+"】,不能修改其版本信息，只可进行【新增版本】操作！");
 	}

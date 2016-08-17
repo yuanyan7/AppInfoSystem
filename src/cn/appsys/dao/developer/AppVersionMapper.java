@@ -15,4 +15,6 @@ public interface AppVersionMapper {
 	public int getVersionCountByAppId(@Param("appId")Integer appId)throws Exception;
 	
 	public int deleteVersionByAppId(@Param("appId")Integer appId)throws Exception;
+	
+	public AppVersion getAppVersionById(@Param("id")Integer id)throws Exception;
 }

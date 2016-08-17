@@ -38,6 +38,14 @@ public class AppInfo {
 	private String logoPicPath;//LOGO图片URL路径
 	private String logoLocPath;//LOGO图片的服务器存储路径
 	
+	private Integer versionId;//最新的版本id
+		
+	public Integer getVersionId() {
+		return versionId;
+	}
+	public void setVersionId(Integer versionId) {
+		this.versionId = versionId;
+	}
 	public String getLogoLocPath() {
 		return logoLocPath;
 	}

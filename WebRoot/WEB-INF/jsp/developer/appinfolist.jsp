@@ -94,6 +94,13 @@
 							<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="hidden" name="categorylevel2list" id="categorylevel2list"/>
         						<select name="queryCategoryLevel2" id="queryCategoryLevel2" class="form-control">
+        							<c:if test="${categoryLevel2List != null }">
+									   <option value="">--请选择--</option>
+									   <c:forEach var="appCategory" items="${categoryLevel2List}">
+									   		<option <c:if test="${appCategory.id == queryCategoryLevel2 }">selected="selected"</c:if>
+									   		value="${appCategory.id}">${appCategory.categoryName}</option>
+									   </c:forEach>
+									</c:if>
         						</select>
 							</div>
 						</div>
@@ -102,7 +109,15 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">三级分类</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-        						<select name="queryCategoryLevel3" id="queryCategoryLevel3" class="form-control"></select>
+        						<select name="queryCategoryLevel3" id="queryCategoryLevel3" class="form-control">
+        							<c:if test="${categoryLevel3List != null }">
+									   <option value="">--请选择--</option>
+									   <c:forEach var="appCategory" items="${categoryLevel3List}">
+									   		<option <c:if test="${appCategory.id == queryCategoryLevel3 }">selected="selected"</c:if>
+									   		value="${appCategory.id}">${appCategory.categoryName}</option>
+									   </c:forEach>
+									</c:if>
+        						</select>
 							</div>
 						</div>
 					</li>
@@ -163,7 +178,7 @@
 										aria-controls="datatable-responsive" rowspan="1" colspan="1"
 										style="width: 64px;"
 										aria-label="Last name: activate to sort column ascending">
-										上架时间</th>
+										最新版本号</th>
 									<th class="sorting" tabindex="0"
 										aria-controls="datatable-responsive" rowspan="1" colspan="1"
 										style="width: 170px;"
@@ -181,11 +196,12 @@
 										<td>${appInfo.categoryLevel1Name } -> ${appInfo.categoryLevel2Name } -> ${appInfo.categoryLevel3Name }</td>
 										<td>${appInfo.statusName }</td>
 										<td>${appInfo.downloads }</td>
-										<td><fmt:formatDate value="${appInfo.onSaleDate }" pattern="yyyy-MM-dd"/></td>
+										<td>${appInfo.versionId }</td>
 										<td>
 										<button type="button" class="btn btn-default addVersion" appinfoid=${appInfo.id } data-toggle="tooltip" data-placement="top" title="" data-original-title="新增APP版本信息">新增版本</button>
 										<button type="button" class="btn btn-default modifyVersion" 
-											appinfoid=${appInfo.id } status=${appInfo.status } statusname=${appInfo.statusName }
+											versionid="${appInfo.versionId }" status="${appInfo.status }" 
+											statusname="${appInfo.statusName }"											
 											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP最新版本信息">修改版本</button>
 										<button type="button" class="btn btn-default modifyAppInfo" 
 											appinfoid=${appInfo.id } status=${appInfo.status } statusname=${appInfo.statusName }

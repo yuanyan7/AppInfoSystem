@@ -1,10 +1,10 @@
 package cn.appsys.dao.developer;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.apache.ibatis.annotations.Param;
 import cn.appsys.pojo.DataDictionary;
 
 public interface DataDictionaryMapper {
 	
-	public List<DataDictionary> getDataDictionaryList(@RequestParam("typeCode")String typeCode)throws Exception;
+	public List<DataDictionary> getDataDictionaryList(@Param("typeCode")String typeCode)throws Exception;
 }

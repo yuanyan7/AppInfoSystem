@@ -50,12 +50,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				a.flatformId,
 				(select valueName from data_dictionary d where  a.status=d.valueId AND d.typeCode='APP_FLATFORM') as flatformName,
 				a.categoryLevel1,
-				(select categoryName from app_category c where  c.id=a.categoryId) as categoryLevel1Name,
+				(select categoryName from app_category c where  c.id=a.categoryLevel1) as categoryLevel1Name,
 				a.categoryLevel2,
-				(select categoryName from app_category c where  c.id=a.categoryId) as categoryLevel2Name,
+				(select categoryName from app_category c where  c.id=a.categoryLevel2) as categoryLevel2Name,
 				a.categoryLevel3,
-				(select categoryName from app_category c where  c.id=a.categoryId) as categoryLevel3Name,
-				a.downloads
+				(select categoryName from app_category c where  c.id=a.categoryLevel3) as categoryLevel3Name,
+				a.downloads,
+				a.onSaleDate
 			from  app_info a
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="softwareName != null and softwareName != ''">
@@ -84,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getAppInfoCount" resultType="Int">
-		select count(*) as count from app_info
+		select count(*) as count from app_info a
 			<trim prefix="where" prefixOverrides="and | or">
 				<if test="softwareName != null and softwareName != ''">
 					and a.softwareName like CONCAT ('%',#{softwareName},'%')
@@ -115,13 +116,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(select devName from dev_user where id = a.devId) as devName,
 			(select valueName from data_dictionary d where  a.status=d.valueId AND d.typeCode='APP_STATUS') as statusName,
 			(select valueName from data_dictionary d where  a.status=d.valueId AND d.typeCode='APP_FLATFORM') as flatformName,
-			(select categoryName from app_category c where  c.id=a.categoryId) as categoryLevel1Name,
-			(select categoryName from app_category c where  c.id=a.categoryId) as categoryLevel2Name,
-			(select categoryName from app_category c where  c.id=a.categoryId) as categoryLevel3Name
-		  from app_info where
+			(select categoryName from app_category c where  c.id=a.categoryLevel1) as categoryLevel1Name,
+			(select categoryName from app_category c where  c.id=a.categoryLevel2) as categoryLevel2Name,
+			(select categoryName from app_category c where  c.id=a.categoryLevel3) as categoryLevel3Name
+		  from app_info a
 		  <trim prefix="where" prefixOverrides="and | or">
 				<if test="id != null">
-					and id = #{id}
+					and a.id = #{id}
 				</if>
 				<if test="APKName != null">
 					and a.APKName = #{APKName}

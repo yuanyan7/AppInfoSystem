@@ -19,7 +19,7 @@ public interface AppInfoMapper {
 										@Param(value="categoryLevel3")Integer queryCategoryLevel3,
 										@Param(value="flatformId")Integer queryFlatformId,
 										@Param(value="devId")Integer devId,
-										@Param(value="currentPageNo")Integer currentPageNo,
+										@Param(value="from")Integer currentPageNo,
 										@Param(value="pageSize")Integer pageSize)throws Exception;
 	
 	public int getAppInfoCount(@Param(value="softwareName")String querySoftwareName,
@@ -27,7 +27,8 @@ public interface AppInfoMapper {
 							   @Param(value="categoryLevel1")Integer queryCategoryLevel1,
 							   @Param(value="categoryLevel2")Integer queryCategoryLevel2,
 							   @Param(value="categoryLevel3")Integer queryCategoryLevel3,
-							   @Param(value="flatformId")Integer queryFlatformId)throws Exception;
+							   @Param(value="flatformId")Integer queryFlatformId,
+							   @Param(value="devId")Integer devId)throws Exception;
 	
 	public AppInfo getAppInfo(@Param(value="id")Integer id,@Param(value="APKName")String APKName)throws Exception;
 

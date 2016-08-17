@@ -10,9 +10,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="appId != null">
 				and appId = #{appId}
 			</if>
-			<if test="id != null">
-				and id = #{id}
-			</if>
 		</trim>
 		order by creationDate DESC
 	</select>
@@ -23,5 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				values(#{appId},#{versionNo},#{versionInfo},#{publishStatus},#{downloadLink},
 					   #{versionSize},#{createdBy},#{creationDate})
 	</insert>
+	
+	<select id="getVersionCountByAppId" resultType="Int">
+		select count(*) as count from app_version where appId = #{appId}
+	</select>
+	
+	<delete id="deleteVersionByAppId">
+		delete from app_version where appId = #{appId}
+	</delete>
+	
 	
 </mapper>

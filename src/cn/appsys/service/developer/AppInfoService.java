@@ -78,4 +78,12 @@ public interface AppInfoService {
 	 */
 	public boolean deleteAppLogo(Integer id)throws Exception;
 	
+	/**
+	 * 通过appId删除app应用(app_info、app_version)
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean appsysdeleteAppById(Integer id)throws Exception;
+	
 }

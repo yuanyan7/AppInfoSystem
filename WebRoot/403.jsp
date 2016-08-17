@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>401</title>
+    <title>403</title>
 
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath }/statics/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
         <div class="col-md-12">
           <div class="col-middle">
             <div class="text-center">
-              <h1 class="error-number">401</h1>
+              <h1 class="error-number">403</h1>
               <h2>对不起，您没有权限访问！</h2>
               <p>请返回到 <a href="${pageContext.request.contextPath }/index.jsp">系统入口</a>
               </p>

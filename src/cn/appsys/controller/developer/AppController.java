@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.jdbc.StringUtils;
-
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.AppVersion;
@@ -137,6 +136,13 @@ public class AppController {
 		model.addAttribute("statusList", statusList);
 		model.addAttribute("flatFormList", flatFormList);
 		model.addAttribute("categoryLevel1List", categoryLevel1List);
+		model.addAttribute("pages", pages);
+		model.addAttribute("queryStatus", queryStatus);
+		model.addAttribute("querySoftwareName", querySoftwareName);
+		model.addAttribute("queryCategoryLevel1", queryCategoryLevel1);
+		model.addAttribute("queryCategoryLevel2", queryCategoryLevel2);
+		model.addAttribute("queryCategoryLevel3", queryCategoryLevel3);
+		model.addAttribute("queryFlatformId", queryFlatformId);
 		return "developer/appinfolist";
 	}
 	
@@ -148,6 +154,7 @@ public class AppController {
 	@RequestMapping(value="/categorylevellist.json",method=RequestMethod.GET)
 	@ResponseBody
 	public List<AppCategory> getAppCategoryList (@RequestParam String pid){
+		logger.debug("getAppCategoryList pid ============ " + pid);
 		List<AppCategory> categoryLevelList = null;
 		try {
 			categoryLevelList = appCategoryService.getAppCategoryListByParentId(Integer.parseInt(pid));
@@ -382,6 +389,25 @@ public class AppController {
 	}
 	
 	/**
+	 * 修改最新的appVersion信息（跳转到修改appVersion页面）
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/appversionmodify/{id}",method=RequestMethod.GET)
+	public String modifyAppVersion(@PathVariable String id,Model model){
+		AppInfo appInfo = null;
+		try {
+			appInfo = appInfoService.getAppInfo(Integer.parseInt(id),null);
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute(appInfo);
+		return "developer/appversionmodify";
+	}
+	
+	/**
 	 * 上传logo图片（修改操作）
 	 * @param attach
 	 * @param APKName
@@ -395,7 +421,7 @@ public class AppController {
 		String logoPicPath =  null;
 		String logoLocPath =  null;
 		if(!attach.isEmpty()){
-			String path = request.getSession().getServletContext().getRealPath("statics"+java.io.File.separator+"uploadfiles");
+			String path = request.getSession().getServletContext().getRealPath("statics"+File.separator+"uploadfiles");
 			logger.info("uploadFile path: " + path);
 			String oldFileName = attach.getOriginalFilename();//原文件名
 			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
@@ -460,7 +486,7 @@ public class AppController {
 	}
 	
 	/**
-	 * 保存修改后的appInfo？？？得不到appInfo？？？
+	 * 保存修改后的appInfo
 	 * @param appInfo
 	 * @param session
 	 * @return
@@ -478,5 +504,30 @@ public class AppController {
 			e.printStackTrace();
 		}
 		return "developer/appinfomodify";
+	}
+	
+	
+	@RequestMapping(value="/delapp.json")
+	@ResponseBody
+	public Object delApp(@RequestParam String id){
+		logger.debug("delApp appId===================== "+id);
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		if(StringUtils.isNullOrEmpty(id)){
+			resultMap.put("delResult", "notexist");
+		}else{
+			try {
+				if(appInfoService.appsysdeleteAppById(Integer.parseInt(id)))
+					resultMap.put("delResult", "true");
+				else
+					resultMap.put("delResult", "false");
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return JSONArray.toJSONString(resultMap);
 	}
 }

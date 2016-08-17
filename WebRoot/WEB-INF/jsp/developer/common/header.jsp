@@ -36,6 +36,9 @@
 <link
 	href="${pageContext.request.contextPath }/statics/css/jqvmap.min.css"
 	rel="stylesheet" />
+	<link
+	href="${pageContext.request.contextPath }/statics/css/dropzone.min.css"
+	rel="stylesheet">
 <!-- Custom Theme Style -->
 <link
 	href="${pageContext.request.contextPath }/statics/css/custom.min.css"

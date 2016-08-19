@@ -189,7 +189,7 @@
         </div>
       </div>
     <div class="clearfix"></div>
-    <br/>
+    <br/><br/>
   </div>
 </div>
 <%@include file="common/footer.jsp"%>

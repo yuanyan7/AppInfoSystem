@@ -231,7 +231,11 @@ public class AppController {
 			logger.info("uploadFile path: " + path);
 			String oldFileName = attach.getOriginalFilename();//原文件名
 			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
-			if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
+			int filesize = 500000;
+			if(attach.getSize() > filesize){//上传大小不得超过 50k
+				request.setAttribute("fileUploadError", Constants.FILEUPLOAD_ERROR_4);
+				return "developer/appinfoadd";
+            }else if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") 
 			   ||prefix.equalsIgnoreCase("jepg") || prefix.equalsIgnoreCase("pneg")){//上传图片格式
 				 String fileName = appInfo.getAPKName() + ".jpg";//上传LOGO图片命名:apk名称.apk
 				 File targetFile = new File(path,fileName);

@@ -11,6 +11,6 @@
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath }/statics/js/custom.min.js"></script>
     <!-- validator -->
-    <script src="${pageContext.request.contextPath }/statics/js/validator.js"></script>
+<%--     <script src="${pageContext.request.contextPath }/statics/js/validator.js"></script> --%>
     <!-- dropzone -->
     <script src="${pageContext.request.contextPath }/statics/js/dropzone.js"></script>  

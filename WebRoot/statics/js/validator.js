@@ -306,6 +306,7 @@ var validator = (function($){
 
         // Check if there is a specific error message for that field, if not, use the default 'invalid' message
         alertTxt = message[field.prop('name')] || message.invalid;
+   
 
         // Special treatment
         if( field[0].nodeName.toLowerCase() === "select" ){

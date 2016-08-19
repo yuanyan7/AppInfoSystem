@@ -17,7 +17,7 @@ var validator = (function($){
     message = {
         invalid         : 'invalid input',
         checked         : 'must be checked',
-        empty           : '请在这里输入些内容，谢谢',
+        empty           : '请输入相应内容，谢谢',
         min             : '太短',
         max             : '太长',
         number_min      : '太小了，最小10Mb',

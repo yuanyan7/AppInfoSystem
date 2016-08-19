@@ -56,5 +56,14 @@ public class AppVersionServiceImpl implements AppVersionService {
 		}
 		return flag;
 	}
+	@Override
+	public boolean deleteApkFile(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		if(mapper.deleteApkFile(id) > 0){
+			flag = true;
+		}
+		return flag;
+	}
 
 }

@@ -8,7 +8,7 @@ public class AppVersion {
 	private Integer appId;
 	private String versionNo;
 	private String versionInfo;
-	private Integer publishStatus;
+	private Integer publishStatus;//发布状态id
 	private String downloadLink;//apk文件下载链接
 	private BigDecimal versionSize;
 	private Integer createdBy;
@@ -17,6 +17,28 @@ public class AppVersion {
 	private Date modifyDate;
 	private String apkLocPath;//apk文件的服务器存储路径
 	
+	private String appName;//APP软件名称
+	private String publishStatusName;//发布状态名称
+	private String apkFileName;//上传的apk文件名称
+	
+	public String getApkFileName() {
+		return apkFileName;
+	}
+	public void setApkFileName(String apkFileName) {
+		this.apkFileName = apkFileName;
+	}
+	public String getPublishStatusName() {
+		return publishStatusName;
+	}
+	public void setPublishStatusName(String publishStatusName) {
+		this.publishStatusName = publishStatusName;
+	}
+	public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 	public String getApkLocPath() {
 		return apkLocPath;
 	}

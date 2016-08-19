@@ -14,22 +14,8 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form method="post">
+				<form method="post" action="list">
 					<input type="hidden" name="pageIndex" value="1" />
-				<style>
-				.x_content form ul {
-					list-style: none;
-				}
-				
-				.x_content form ul li {
-					width: 350px;
-					display: inline-block;
-					height:40px;
-					line-height: 40px;
-					vertical-align: middle;
-				}
-				</style>
-				
 			    <ul>
 					<li>
 						<div class="form-group">
@@ -198,13 +184,13 @@
 										<td>${appInfo.downloads }</td>
 										<td>${appInfo.versionNo }</td>
 										<td>
-										<button type="button" class="btn btn-default addVersion" appinfoid=${appInfo.id } data-toggle="tooltip" data-placement="top" title="" data-original-title="新增APP版本信息">新增版本</button>
+										<button type="button" class="btn btn-default addVersion" appinfoid="${appInfo.id }" data-toggle="tooltip" data-placement="top" title="" data-original-title="新增APP版本信息">新增版本</button>
 										<button type="button" class="btn btn-default modifyVersion" 
-											versionid="${appInfo.versionId }" status="${appInfo.status }" 
+											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
 											statusname="${appInfo.statusName }"											
 											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP最新版本信息">修改版本</button>
 										<button type="button" class="btn btn-default modifyAppInfo" 
-											appinfoid=${appInfo.id } status=${appInfo.status } statusname=${appInfo.statusName }
+											appinfoid="${appInfo.id }" status="${appInfo.status }" statusname="${appInfo.statusName }"
 											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP基础信息">修改</button>
 										<button type="button" class="btn btn-default viewApp" appinfoid=${appInfo.id }  data-toggle="tooltip" data-placement="top" title="" data-original-title="查看APP基础信息以及全部版本信息">查看</button>
 										<button type="button" class="btn btn-default deleteApp" appinfoid=${appInfo.id }  appsoftwarename=${appInfo.softwareName } data-toggle="tooltip" data-placement="top" title="" data-original-title="删除APP基础信息以及全部版本信息">删除</button>

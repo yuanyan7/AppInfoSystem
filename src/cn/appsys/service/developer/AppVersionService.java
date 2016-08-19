@@ -33,4 +33,12 @@ public interface AppVersionService {
 	 * @throws Exception
 	 */
 	public boolean modify(AppVersion appVersion)throws Exception;
+	
+	/**
+	 * 删除apk文件
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean deleteApkFile(Integer id)throws Exception;
 }

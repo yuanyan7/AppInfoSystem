@@ -57,7 +57,7 @@
  	<tx:advice id="myAdvice" transaction-manager="txManager">  
     	<tx:attributes>  
 	        <tx:method name="appsys*"  propagation="REQUIRED" rollback-for="Exception"  />
-	        <tx:method name="*" read-only="true"/>
+	        <tx:method name="*" />
     	</tx:attributes>  
  	</tx:advice>
     

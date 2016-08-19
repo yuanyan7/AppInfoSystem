@@ -466,9 +466,17 @@ public class AppController {
 	@RequestMapping(value="/appversionmodify",method=RequestMethod.GET)
 	public String modifyAppVersion(@RequestParam("vid") String versionId,
 									@RequestParam("aid") String appId,
+									@RequestParam(value="error",required= false)String fileUploadError,
 									Model model){
 		AppVersion appVersion = null;
 		List<AppVersion> appVersionList = null;
+		if(null != fileUploadError && fileUploadError.equals("error1")){
+			fileUploadError = Constants.FILEUPLOAD_ERROR_1;
+		}else if(null != fileUploadError && fileUploadError.equals("error2")){
+			fileUploadError	= Constants.FILEUPLOAD_ERROR_2;
+		}else if(null != fileUploadError && fileUploadError.equals("error3")){
+			fileUploadError = Constants.FILEUPLOAD_ERROR_3;
+		}
 		try {
 			appVersion = appVersionService.getAppVersionById(Integer.parseInt(versionId));
 			appVersionList = appVersionService.getAppVersionList(Integer.parseInt(appId));
@@ -478,6 +486,7 @@ public class AppController {
 		}
 		model.addAttribute(appVersion);
 		model.addAttribute("appVersionList",appVersionList);
+		model.addAttribute("fileUploadError",fileUploadError);
 		return "developer/appversionmodify";
 	}
 	
@@ -616,7 +625,7 @@ public class AppController {
 			logger.info("uploadFile path: " + path);
 			String oldFileName = attach.getOriginalFilename();//原文件名
 			String prefix = FilenameUtils.getExtension(oldFileName);//原文件后缀
-			int filesize = 50000;
+			int filesize = 500000;
 			if(attach.getSize() > filesize){//上传大小不得超过 50k
             	 return "redirect:/dev/flatform/app/appinfomodify?id="+appInfo.getId()
 						 +"&error=error4";

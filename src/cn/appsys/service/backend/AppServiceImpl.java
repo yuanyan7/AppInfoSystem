@@ -3,18 +3,18 @@ package cn.appsys.service.backend;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-import cn.appsys.dao.backend.AppMapper;
+import cn.appsys.dao.appinfo.AppInfoMapper;
 import cn.appsys.pojo.AppInfo;
 
 @Service
 public class AppServiceImpl implements AppService {
 	@Resource
-	private AppMapper mapper;
+	private AppInfoMapper mapper;
 	
 	@Override
 	public AppInfo getAppInfo(Integer id) throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.getAppInfo(id);
+		return mapper.getAppInfo(id, null);
 	}
 
 	@Override
@@ -24,7 +24,8 @@ public class AppServiceImpl implements AppService {
 									Integer queryFlatformId,Integer currentPageNo,
 									Integer pageSize) throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.getAppInfoList(querySoftwareName, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId, (currentPageNo-1)*pageSize, pageSize);
+		return mapper.getAppInfoList(querySoftwareName, 1, queryCategoryLevel1, queryCategoryLevel2, 
+				                 queryCategoryLevel3, queryFlatformId, null, (currentPageNo-1)*pageSize, pageSize);
 	}
 
 	@Override
@@ -35,7 +36,8 @@ public class AppServiceImpl implements AppService {
 							Integer queryFlatformId)
 							throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.getAppInfoCount(querySoftwareName, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId);
+		return mapper.getAppInfoCount(querySoftwareName, 1, queryCategoryLevel1, queryCategoryLevel2, 
+									queryCategoryLevel3, queryFlatformId, null);
 	}
 
 	@Override

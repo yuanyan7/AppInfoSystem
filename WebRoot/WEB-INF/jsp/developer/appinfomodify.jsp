@@ -132,6 +132,9 @@
           </div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
+            	<c:if test="${appInfo.status == 3}">
+            	 	<button id="send" type="submit" name="status" value="1" class="btn btn-success">保存并再次提交审核</button>
+            	</c:if>
               <button id="send" type="submit" class="btn btn-success">保存</button>
               <button type="button" class="btn btn-primary" id="back">返回</button>
             </div>

@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import cn.appsys.dao.developer.DataDictionaryMapper;
+import cn.appsys.dao.datadictionary.DataDictionaryMapper;
 import cn.appsys.pojo.DataDictionary;
 
 @Service

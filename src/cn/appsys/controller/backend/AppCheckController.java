@@ -8,14 +8,20 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
+import cn.appsys.pojo.AppVersion;
 import cn.appsys.pojo.DataDictionary;
 import cn.appsys.pojo.DevUser;
 import cn.appsys.service.backend.AppService;
 import cn.appsys.service.developer.AppCategoryService;
+import cn.appsys.service.developer.AppVersionService;
 import cn.appsys.service.developer.DataDictionaryService;
 import cn.appsys.tools.Constants;
 import cn.appsys.tools.PageSupport;
@@ -27,6 +33,8 @@ public class AppCheckController {
 	
 	@Resource
 	private AppService appService;
+	@Resource
+	private AppVersionService appVersionService;
 	@Resource 
 	private DataDictionaryService dataDictionaryService;
 	@Resource 
@@ -155,4 +163,58 @@ public class AppCheckController {
 		}
 		return categoryLevelList;
 	}
+	
+	/**
+	 * 根据parentId查询出相应的分类级别列表
+	 * @param pid
+	 * @return
+	 */
+	@RequestMapping(value="/categorylevellist.json",method=RequestMethod.GET)
+	@ResponseBody
+	public List<AppCategory> getAppCategoryList (@RequestParam String pid){
+		logger.debug("getAppCategoryList pid ============ " + pid);
+		if(pid.equals("")) pid = null;
+		return getCategoryList(pid);
+	}
+	
+	
+	/**
+	 * 跳转到APP信息审核页面
+	 * @param appId
+	 * @param versionId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/check",method=RequestMethod.GET)
+	public String check(@RequestParam(value="aid",required=false) String appId,
+					   @RequestParam(value="vid",required=false) String versionId,
+					   Model model){
+		AppInfo appInfo = null;
+		AppVersion appVersion = null;
+		try {
+			appInfo = appService.getAppInfo(Integer.parseInt(appId));
+			appVersion = appVersionService.getAppVersionById(Integer.parseInt(versionId));
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute(appVersion);
+		model.addAttribute(appInfo);
+		return "backend/appcheck";
+	}
+	@RequestMapping(value="/checksave",method=RequestMethod.POST)
+	public String checkSave(AppInfo appInfo){
+		logger.debug("appInfo =========== > " + appInfo.getStatus());
+		try {
+			if(appService.updateSatus(appInfo.getStatus(),appInfo.getId())){
+				return "redirect:/manager/backend/app/list";
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "backend/appcheck";
+	}
+	
+	
 }

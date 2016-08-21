@@ -2,7 +2,8 @@ package cn.appsys.service.backend;
 
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-import cn.appsys.dao.backend.BackendUserMapper;
+
+import cn.appsys.dao.backenduser.BackendUserMapper;
 import cn.appsys.pojo.BackendUser;
 
 @Service

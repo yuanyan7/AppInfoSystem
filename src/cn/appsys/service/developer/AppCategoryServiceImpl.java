@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import cn.appsys.dao.developer.AppCategoryMapper;
+import cn.appsys.dao.appcategory.AppCategoryMapper;
 import cn.appsys.pojo.AppCategory;
 @Service
 public class AppCategoryServiceImpl implements AppCategoryService {

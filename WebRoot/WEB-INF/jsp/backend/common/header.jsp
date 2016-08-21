@@ -27,6 +27,8 @@
     <link href="${pageContext.request.contextPath }/statics/css/jqvmap.min.css" rel="stylesheet"/>
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath }/statics/css/custom.min.css" rel="stylesheet">
+    <!-- add localcss 2016-8-21 -->
+    <link href='${pageContext.request.contextPath }/statics/localcss/applist.css' rel='stylesheet'>
   </head>
   <body class="nav-md footer_fixed">
     <div class="container body">

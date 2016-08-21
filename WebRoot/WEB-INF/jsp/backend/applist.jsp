@@ -8,7 +8,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					APP 审核列表 <i class="fa fa-user"></i><small>${UserSession.userName}
+					APP 审核列表 <i class="fa fa-user"></i><small>${userSession.userName}
 						- 您可以通过搜索或者其他的筛选项对APP的信息进行审核操作。^_^</small>
 				</h2>
 				<div class="clearfix"></div>
@@ -150,7 +150,7 @@
 										最新版本号</th>
 									<th class="sorting" tabindex="0"
 										aria-controls="datatable-responsive" rowspan="1" colspan="1"
-										style="width: 170px;"
+										style="width: 30px;"
 										aria-label="Last name: activate to sort column ascending">
 										操作</th>
 								</tr>
@@ -167,15 +167,10 @@
 										<td>${appInfo.downloads }</td>
 										<td>${appInfo.versionNo }</td>
 										<td>
-										<button type="button" class="btn btn-default modifyVersion" 
+										<button type="button" class="btn btn-default checkApp" 
 											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
 											statusname="${appInfo.statusName }"											
-											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP最新版本信息">修改版本</button>
-										<button type="button" class="btn btn-default modifyAppInfo" 
-											appinfoid="${appInfo.id }" status="${appInfo.status }" statusname="${appInfo.statusName }"
-											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP基础信息">修改</button>
-										<button type="button" class="btn btn-default viewApp" appinfoid=${appInfo.id }  data-toggle="tooltip" data-placement="top" title="" data-original-title="查看APP基础信息以及全部版本信息">查看</button>
-										<button type="button" class="btn btn-default deleteApp" appinfoid=${appInfo.id }  appsoftwarename=${appInfo.softwareName } data-toggle="tooltip" data-placement="top" title="" data-original-title="删除APP基础信息以及全部版本信息">删除</button>
+											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
 										</td>
 									</tr>
 								</c:forEach>
@@ -229,4 +224,4 @@
 </div>
 <%@include file="common/footer.jsp"%>
 <script src="${pageContext.request.contextPath }/statics/localjs/rollpage.js"></script>
-<script src="${pageContext.request.contextPath }/statics/localjs/appinfolist.js"></script>
+<script src="${pageContext.request.contextPath }/statics/localjs/applist.js"></script>

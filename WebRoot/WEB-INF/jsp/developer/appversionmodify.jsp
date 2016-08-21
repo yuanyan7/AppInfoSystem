@@ -102,7 +102,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="number" id="versionSize" name="versionSize" value="${appVersion.versionSize }"
+              <input type="number" id="versionSize" name="versionSize" value="${appVersion.versionSize }"  required="required"
               data-validate-minmax="10,500"  placeholder="请输入版本大小，单位为Mb" class="form-control col-md-7 col-xs-12">
             </div>
           </div>
@@ -118,7 +118,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">版本简介 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="versionInfo" name="versionInfo"   
+              <textarea id="versionInfo" name="versionInfo" required="required"  
               placeholder="请输入本版本的相关信息，本信息作为该版本的详细信息进行版本介绍。" class="form-control col-md-7 col-xs-12">
               ${appVersion.versionInfo }</textarea>
             </div>
@@ -131,7 +131,7 @@
             <input type="hidden" id="apkLocPath" name="apkLocPath" value="${appVersion.apkLocPath}"/>
             <input type="hidden" id="apkFileName" name="apkFileName" value="${appVersion.apkFileName}"/>
 			<div id="uploadfile" style="display: none">
-				<input id="attach"  type="file" class="form-control col-md-7 col-xs-12" name="attach">
+				<input id="attach" type="file" class="form-control col-md-7 col-xs-12" name="attach">
 				<p><span style="color:red;font-weight: bold;">*注：1、大小不得超过500m.2、文件类型：apk</span></p>
 			</div>
 			<div id="apkFile"></div>

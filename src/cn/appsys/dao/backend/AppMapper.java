@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import cn.appsys.pojo.AppInfo;
 
-public interface AppInfoMapper {
+public interface AppMapper {
 	
 	
 	public List<AppInfo> getAppInfoList(@Param(value="softwareName")String querySoftwareName,

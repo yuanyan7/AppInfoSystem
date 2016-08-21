@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import cn.appsys.pojo.AppInfo;
 
-public interface AppInfoService {
+public interface AppService {
 	
 	/**
 	 * 根据条件查询出待审核的APP列表并分页显示

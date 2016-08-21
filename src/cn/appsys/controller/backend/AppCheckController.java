@@ -14,7 +14,7 @@ import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.DataDictionary;
 import cn.appsys.pojo.DevUser;
-import cn.appsys.service.backend.AppInfoService;
+import cn.appsys.service.backend.AppService;
 import cn.appsys.service.developer.AppCategoryService;
 import cn.appsys.service.developer.DataDictionaryService;
 import cn.appsys.tools.Constants;
@@ -26,7 +26,7 @@ public class AppCheckController {
 	private Logger logger = Logger.getLogger(AppCheckController.class);
 	
 	@Resource
-	private AppInfoService appInfoService;
+	private AppService appService;
 	@Resource 
 	private DataDictionaryService dataDictionaryService;
 	@Resource 
@@ -86,7 +86,7 @@ public class AppCheckController {
 		//总数量（表）
 		int totalCount = 0;
 		try {
-			totalCount = appInfoService.getAppInfoCount(querySoftwareName, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId);
+			totalCount = appService.getAppInfoCount(querySoftwareName, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class AppCheckController {
 			currentPageNo = totalPageCount;
 		}
 		try {
-			appInfoList = appInfoService.getAppInfoList(querySoftwareName, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId, currentPageNo, pageSize);
+			appInfoList = appService.getAppInfoList(querySoftwareName, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, queryFlatformId, currentPageNo, pageSize);
 			flatFormList = this.getDataDictionaryList("APP_FLATFORM");
 			categoryLevel1List = appCategoryService.getAppCategoryListByParentId(null);
 		} catch (Exception e) {

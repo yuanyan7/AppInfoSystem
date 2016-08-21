@@ -3,13 +3,13 @@ package cn.appsys.service.backend;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-import cn.appsys.dao.backend.AppInfoMapper;
+import cn.appsys.dao.backend.AppMapper;
 import cn.appsys.pojo.AppInfo;
 
 @Service
-public class AppInfoServiceImpl implements AppInfoService {
+public class AppServiceImpl implements AppService {
 	@Resource
-	private AppInfoMapper mapper;
+	private AppMapper mapper;
 	
 	@Override
 	public AppInfo getAppInfo(Integer id) throws Exception {

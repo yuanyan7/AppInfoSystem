@@ -44,14 +44,14 @@ public interface AppInfoMapper {
 	public int updateVersionId(@Param(value="versionId")Integer versionId,@Param(value="id")Integer appId)throws Exception;
 	
 	/**
-<<<<<<< HEAD:src/cn/appsys/dao/developer/AppInfoMapper.java
 	 * updateSaleStatusByAppId
 	 * @param appId
 	 * @return
 	 * @throws Exception
 	 */
 	public int updateSaleStatusByAppId(@Param(value="id")Integer appId) throws Exception;
-=======
+
+	/*
 	 * 更新app状态
 	 * @param status
 	 * @param id
@@ -59,5 +59,5 @@ public interface AppInfoMapper {
 	 * @throws Exception
 	 */
 	public int updateSatus(@Param(value="status")Integer status,@Param(value="id")Integer id)throws Exception;
->>>>>>> 256a2a85d4220cf5214e5bb87aea48fcad90f86d:src/cn/appsys/dao/appinfo/AppInfoMapper.java
+
 }

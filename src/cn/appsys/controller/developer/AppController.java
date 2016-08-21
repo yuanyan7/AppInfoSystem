@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.PathParam;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.jdbc.StringUtils;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Appinfo;
+
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.AppVersion;
@@ -371,6 +375,46 @@ public class AppController {
 			e.printStackTrace();
 		}
 		return "redirect:/dev/flatform/app/appversionadd?id="+appVersion.getAppId();
+	}
+	
+	@RequestMapping(value="/{appid}/sale",method=RequestMethod.PUT)
+	@ResponseBody
+	public Object sale(@PathVariable String appid,HttpSession session){
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Integer appIdInteger = 0;
+		try{
+			appIdInteger = Integer.parseInt(appid);
+		}catch(Exception e){
+			appIdInteger = 0;
+		}
+		resultMap.put("errorCode", "0");
+		resultMap.put("appId", appid);
+		if(appIdInteger>0){
+			try {
+				DevUser devUser = (DevUser)session.getAttribute(Constants.DEV_USER_SESSION);
+				AppInfo appInfo = new AppInfo();
+				appInfo.setId(appIdInteger);
+				appInfo.setModifyBy(devUser.getId());
+				if(appInfoService.appsysUpdateSaleStatusByAppId(appInfo)){
+					resultMap.put("resultMsg", "success");
+				}else{
+					resultMap.put("resultMsg", "success");
+				}		
+			} catch (Exception e) {
+				resultMap.put("errorCode", "exception000001");
+			}
+		}else{
+			//errorCode:0为正常
+			resultMap.put("errorCode", "param000001");
+		}
+		
+		/*
+		 * resultMsg:success/failed
+		 * errorCode:exception000001
+		 * appId:appId
+		 * errorCode:param000001
+		 */
+		return resultMap;
 	}
 	
 	/**

@@ -42,4 +42,12 @@ public interface AppInfoMapper {
 	 * @throws Exception
 	 */
 	public int updateVersionId(@Param(value="versionId")Integer versionId,@Param(value="id")Integer appId)throws Exception;
+	
+	/**
+	 * updateSaleStatusByAppId
+	 * @param appId
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateSaleStatusByAppId(@Param(value="id")Integer appId) throws Exception;
 }

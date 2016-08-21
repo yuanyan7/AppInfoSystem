@@ -1,6 +1,9 @@
 package cn.appsys.service.developer;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.appsys.pojo.AppInfo;
 
 public interface AppInfoService {
@@ -86,4 +89,12 @@ public interface AppInfoService {
 	 */
 	public boolean appsysdeleteAppById(Integer id)throws Exception;
 	
+	
+	/**
+	 * update Sale Status By AppId and Operator
+	 * @param appId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean appsysUpdateSaleStatusByAppId(AppInfo appInfo) throws Exception;
 }
